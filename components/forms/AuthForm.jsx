@@ -28,14 +28,18 @@ const AuthForm = () => {
     // e.preventDefault();
 
     try {
-      signIn("credentials", { email, password, redirect: false });
-      router.push("/feed");
+      await axios.post("/api/login", {
+        email,
+        password,
+      });
+
       toast.success('Logged in successfully!')
+      router.push("/feed")
     } catch (error) {
       console.log(error);
       toast.error("Error while sign in.")
     }
-  }, [email, router, password]);
+  }, [email, password, router]);
 
   const register = useCallback(async (e) => {
     // e.preventDefault();
