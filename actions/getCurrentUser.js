@@ -1,31 +1,14 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prisma from "@/libs/prismadb";
-import { getServerSession } from "next-auth";
+const url = `${process.env.NEXT_PUBLIC_API_URL}/getByToken`
 
-export async function getSession() {
-  return await getServerSession(authOptions);
-}
-
-export default async function getCurrentUser() {
+const getCurrentUser = async () => {
   try {
-    const session = await getSession();
-
-    if (!session?.user?.email) {
-      return null;
-    }
-
-    const currentUser = await prisma.user.findUnique({
-      where: {
-        email: session.user.email,
-      },
-    });
-
-    if (!currentUser) {
-      return null;
-    }
-
-    return currentUser;
+    const res = await fetch(`${url}`)
+    console.log(res)
+  
+    return res.json()
   } catch (error) {
-    return null;
+    return <></>
   }
 }
+
+export default getCurrentUser;

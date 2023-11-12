@@ -2,13 +2,13 @@ import Link from "next/link";
 import React from "react";
 import NewPostButton from "@/components/feed-props/NewPostButton";
 import getUsers from "@/actions/getUsers";
-import getCurrentUser from "@/actions/getCurrentUser";
+// import getCurrentUser from "@/actions/getCurrentUser";
 
 const Layout = ({ children }) => {
 
-  const {currentUser} = getCurrentUser()
+  // const {currentUser} = getCurrentUser()
 
-  console.log({currentUser})
+  // console.log({currentUser})
 
   // const users = getUsers()
 
@@ -21,9 +21,9 @@ const Layout = ({ children }) => {
       <div className="layout w-full px-0 lg:px-10 pb-1 2xl:px-40 bg-bgColor lg:rounded-lg h-screen overflow-hidden">
         <div className="w-full flex gap-2 lg:gap-4 pt-5 h-full">
           {/* LEFT */}
-          <div className="hidden w-1/3 lg:w-1/4 h-screen md:flex flex-col gap-6 overflow-y-auto">
+          {/* <div className="hidden w-1/3 lg:w-1/4 h-screen md:flex flex-col gap-6 overflow-y-auto">
             {currentUser?.username}
-          </div>
+          </div> */}
 
           {/* CENTER */}
           <div className="flex-1 h-full px-4 flex flex-col gap-6 overflow-y-auto rounded-lg">
