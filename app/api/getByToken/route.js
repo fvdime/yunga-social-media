@@ -2,10 +2,9 @@ import next from "@/libs/next"
 import useMiddleware from "@/libs/middleware/useMiddleware";
 import authenticate from "@/libs/middleware/authenticate";
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from '@/libs/prismadb'
 import httpStatus from "http-status";
 
-const prisma = new PrismaClient()
 
 async function handler(req) {
     const user = await prisma.user.findFirst({

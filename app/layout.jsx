@@ -1,8 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ToasterProvider from '@/providers/ToasterProvider'
-import { store } from '@/stores'
-import { fetchUser } from '@/stores/user-store'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,8 +10,6 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }) {
-  await store.dispatch(fetchUser())
-  console.log(store.getState().user)
   return (
     <html lang="en">
       <body className={inter.className}>
