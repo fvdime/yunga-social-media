@@ -1,9 +1,7 @@
 import bcrypt from 'bcrypt'
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/libs/prismadb'
 import { NextResponse } from 'next/server'
 import { generateAccessToken, generateRefreshToken } from '@/libs/generateToken'
-
-const prisma = new PrismaClient()
 
 //EXPIRATION DATE FOR TOKENS
 const MAX_AGE = 30 * 24 * 60 * 60 * 1000
