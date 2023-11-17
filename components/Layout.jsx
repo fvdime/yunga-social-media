@@ -1,11 +1,12 @@
 import Link from "next/link";
-import React from "react";
-import NewPostButton from "@/components/feed-props/NewPostButton";
 import getUsers from "@/actions/getUsers";
 import Image from "next/image";
+import Sidebar from "./feed-props/Sidebar";
 
 const Layout = async ({ children }) => {
   const users = await getUsers();
+
+  // console.log(users)
 
   if (users.length === 0) {
     return <></>;
@@ -17,13 +18,12 @@ const Layout = async ({ children }) => {
         <div className="w-full flex gap-2 lg:gap-4 pt-5 h-full">
           {/* LEFT */}
           <div className="hidden w-1/3 lg:w-1/4 h-screen md:flex flex-col gap-6 overflow-y-auto">
-            askldf
+            <Sidebar/>
           </div>
 
           {/* CENTER */}
           <div className="flex-1 h-full px-4 flex flex-col gap-6 overflow-y-auto rounded-lg">
             {children}
-            <NewPostButton />
           </div>
 
           {/* RIGHT */}

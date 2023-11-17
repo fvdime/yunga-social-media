@@ -24,7 +24,7 @@ const HeroBanner = () => {
       </section>
       <footer>
         <hr />
-        <div className='flex flex-row w-full items-center justify-between pt-2'>
+        <div className='flex flex-row w-full items-center justify-between pt-4'>
         <h1 className='text-xs uppercase font-bold'>yunga</h1>
         <div className='flex items-center gap-4 text-xs font-semibold'>
             <Link href='/' className=' hover:underline'>About</Link>

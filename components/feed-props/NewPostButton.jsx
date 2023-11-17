@@ -1,44 +1,25 @@
-'use client'
+"use client";
 
-import React, {useState} from 'react'
-import NewPostModal from '../modals/NewPostModal';
+import React, { useState } from "react";
+import NewPostModal from "../modals/NewPostModal";
 
 const NewPostButton = () => {
-
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div>
-      <div className="fixed bottom-4 group">
-        <button
-          className="flex items-center justify-center text-white bg-pink-500 rounded-full w-10 h-10 hover:bg-pink-600 focus:ring-4 focus:ring-pink-300 focus:outline-none"
-          onClick={() => setModalOpen(true)}
-        >
-          <svg
-            className="w-4 h-4 transition-transform group-hover:rotate-45"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 18 18"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 1v16M1 9h16"
-            />
-          </svg>
-          <span className="sr-only">Open actions menu</span>
-        </button>
-      </div>
-
-      <NewPostModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
+      <button
+        className="mt-6 w-full hidden lg:block px-4 py-2 rounded-full bg-slate-700 text-white border border-slate-700 hover:bg-white hover:text-slate-700 cursor-pointer transition-all ease-in duration-500 hover:bg-opacity-10 shadow-md hover:shadow-lg"
+        onClick={() => setModalOpen(true)}
+      >
+        <p className="hidden lg:block text-center font-semibold text-sm">
+          Share
+        </p>
+        <span className="sr-only">Open actions menu</span>
+      </button>
+      <NewPostModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
-  )
-}
+  );
+};
 
-export default NewPostButton
+export default NewPostButton;

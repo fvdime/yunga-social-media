@@ -5,7 +5,9 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req) {
   try {
-    const currentUser = await getCurrentUser(getToken())
+    const token = getToken()
+    console.log(token)
+    const currentUser = await getCurrentUser(token)
     console.log(currentUser)
 
     const postBody = await req.json()
@@ -15,7 +17,7 @@ export async function POST(req) {
       return new NextResponse("Missing Fields!", {status: 400})
     }
   
-    const post = await prisma.user.create({
+    const post = await prisma.post.create({
       data: {
         body, image, userId: currentUser.id
       }
