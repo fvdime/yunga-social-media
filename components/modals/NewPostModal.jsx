@@ -18,7 +18,7 @@ const NewPostModal = ({ open, onClose }) => {
   return (
     <div>
       <div
-        className="fixed z-100 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
+        className="fixed z-40 inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
         onClick={onCloseHandle}
       >
         <div className="relative w-full max-w-md max-h-full">
