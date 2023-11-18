@@ -5,7 +5,7 @@ export const GET = async (req, {params}) => {
   const  {postId} = params
   
   try {
-    const singlePost = await prisma.user.findUnique({
+    const singlePost = await prisma.post.findUnique({
       where: {
        id: postId
       }
@@ -17,3 +17,7 @@ export const GET = async (req, {params}) => {
     return new NextResponse(JSON.stringify({ message: "Something went wrong" }), { status: 500 })
   }
 }
+
+// access key 
+// secret key 
+// REGION 

@@ -1,8 +1,13 @@
 "use client"
 
-import React, { useRef } from 'react'
+import axios from 'axios'
+import React, { useRef, useState } from 'react'
 
 const NewPostModal = ({ open, onClose }) => {
+
+  // NOT WORKING
+  const [image, setImage] = useState("")
+  const [body, setBody] = useState('')
   const wrapperRef = useRef();
 
   const onCloseHandle = (event) => {
@@ -14,6 +19,35 @@ const NewPostModal = ({ open, onClose }) => {
   };
 
   if (!open) return <></>;
+  
+  // const handleImageChange = (e) => {
+  //   setImage(e.target.image[0])
+  // }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // if (!image || !body) {
+    //   return <></>
+    // }
+
+    const formData = new FormData()
+    formData.append("image", image)
+    formData.append("body", body)
+
+    try {
+      const res = await axios.post("/api/post", {
+        formData
+      })
+
+      const data = await res.json()
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  
+  }
 
   return (
     <div>
@@ -54,14 +88,15 @@ const NewPostModal = ({ open, onClose }) => {
                     <div className="flex items-center space-x-4">
                       <div className="flex-1 min-w-0 justify-start">
                         <label
-                          htmlhtmlFor="message"
+                          htmlFor="message"
                           className="block mb-2 text-sm font-medium text-gray-900"
                         >
-                          Title
+                          IMAGE
                         </label>
                         <input
                           className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
-                          placeholder="Title..."
+                          type='file'
+                          // onChange={handleImageChange}
                           // value={title}
                           // onChange={(e) => setTitle(e.target.value)}
                         />
@@ -96,6 +131,7 @@ const NewPostModal = ({ open, onClose }) => {
                 <button
                   type="button"
                   className="text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm inline-flex items-center px-7 py-2.5 text-center mr-2"
+                  onClick={handleSubmit}
                 >
                   Save
                 </button>

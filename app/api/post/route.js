@@ -2,24 +2,57 @@ import getCurrentUser from '@/actions/getCurrentUser'
 import getToken from '@/libs/getToken'
 import prisma from '@/libs/prismadb'
 import { NextResponse } from 'next/server'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+
+const awsS3Client = new S3Client({
+  region: process.env.NEXT_PUBLIC_AWS_S3_REGION,
+  credentials: {
+    accessKeyId: process.env.NEXT_PUBLIC_AWS_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.NEXT_PUBLIC_AWS_S3_SECRET_ACCESS_KEY,
+  }
+})
+
+async function uploadFilesToS3(image, imageName){
+  const imageBuffer = image
+  console.log(imageName)
+
+  const imageContentArray = imageName.split('.');
+
+  const fileContent = imageContentArray[imageContentArray.length - 1];
+
+  const params = {
+    Bucket: process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME,
+    Key: `${imageName}-${Date.now()}`,
+    Body: imageBuffer,
+    ContentType: `image/${fileContent}`
+  }
+
+  const command = new PutObjectCommand(params)
+  await awsS3Client.send(command)
+  return imageName
+}
 
 export async function POST(req) {
   try {
     const token = getToken()
-    console.log(token)
     const currentUser = await getCurrentUser(token)
-    console.log(currentUser)
 
-    const postBody = await req.json()
-    const { body, image } = postBody
+    const formData = await req.formData()
+    const image = formData.get("image")
+    const body = String(formData.get("body"))
   
-    if (!body) {
+    if ( !image || !body ) {
       return new NextResponse("Missing Fields!", {status: 400})
     }
+
+    const buffer = Buffer.from(await image.arrayBuffer())
+    const imageName = await uploadFilesToS3(buffer, image.name)
   
     const post = await prisma.post.create({
       data: {
-        body, image, userId: currentUser.id
+        body: body,
+        image: imageName,
+        userId: currentUser.id
       }
     })
   
