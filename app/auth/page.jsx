@@ -3,10 +3,8 @@ import React from 'react'
 
 export default function Auth() {
   return (
-    <div className='h-screen w-screen flex items-center justify-center bg-zinc-400'>
-      <div className=''>
-        <AuthForm/>
-      </div>
+    <div className='h-screen w-screen'>
+      <AuthForm/>
     </div>
   )
 }
