@@ -6,9 +6,7 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { toast } from "react-hot-toast";
 
-
 const AuthForm = () => {
-
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,143 +22,159 @@ const AuthForm = () => {
     );
   }, []);
 
-  const login = useCallback(async (e) => {
-    // e.preventDefault();
+  const login = useCallback(
+    async (e) => {
+      // e.preventDefault();
 
-    try {
-      await axios.post("/api/login", {
-        email,
-        password,
-      });
+      try {
+        await axios.post("/api/login", {
+          email,
+          password,
+        });
 
-      toast.success('Logged in successfully!')
-      router.push("/feed")
-    } catch (error) {
-      console.log(error);
-      toast.error("Error while sign in.")
-    }
-  }, [email, password, router]);
+        toast.success("Logged in successfully!");
+        router.push("/feed");
+      } catch (error) {
+        console.log(error);
+        toast.error("Error while sign in.");
+      }
+    },
+    [email, password, router]
+  );
 
-  const register = useCallback(async (e) => {
-    // e.preventDefault();
+  const register = useCallback(
+    async (e) => {
+      // e.preventDefault();
 
-    try {
-      await axios.post("/api/register", {
-        email,
-        name,
-        username,
-        password,
-      });
+      try {
+        await axios.post("/api/register", {
+          email,
+          name,
+          username,
+          password,
+        });
 
-      toast.success('Registered successfully!')
-      login();
-    } catch (error) {
-      console.log(error);
-      toast.error("Error while sign up.")
-    }
-  }, [email, name, username, password, login]);
+        toast.success("Registered successfully!");
+        login();
+      } catch (error) {
+        console.log(error);
+        toast.error("Error while sign up.");
+      }
+    },
+    [email, name, username, password, login]
+  );
 
   return (
-    <div>
-      <div>
-        <section className="">
-          <div className="">
-            <div className="flex items-center justify-center">
-              <div className="mb-12 md:mb-0 bg-slate-100/80 border border-slate-200 px-14 py-10 rounded-lg">
-                <form>
-                  <div className="flex items-center justify-center mb-5">
-                    <p className="text-lg">
-                      {variant === "login"
-                        ? "Sign in to your account"
-                        : "Sign up a new account"}
-                    </p>
-                  </div>
-                  <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"></div>
-                  <div className="relative z-0 mb-6">
-                      <input
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        type="text"
-                        id="floating_standard"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-lime-500 peer"
-                        placeholder=" "
-                      />
-                      <label className="absolute text-sm text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-lime-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Email
-                      </label>
-                    </div>
+    <div className="flex flex-row justify-center items-center h-full w-full">
+      <div className="h-screen w-1/5 bg-zinc-950 flex flex-col items-center justify-between text-7xl font-bold uppercase text-white p-4">
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+      <form className="h-full w-full md:w-3/5 py-16 px-4 md:px-16">
+        <div className="flex items-center justify-center mb-5">
+          <p className="text-3xl font-medium">
+            {variant === "login"
+              ? "Sign in to your account"
+              : "Sign up a new account"}
+          </p>
+        </div>
+        <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300"></div>
+        {variant === "register" && (
+          <div className="grid md:grid-cols-2 md:gap-6">
+            <div className="mb-6">
+              <label
+                htmlFor="username"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Your Name
+              </label>
 
-                  {variant === "register" && (
-                    <>
-                      <div className="relative z-0 mb-6">
-                  <input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    type="text"
-                    id="floating"
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-lime-500 peer"
-                    placeholder=" "
-                  />
-                  <label className="absolute text-sm text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-lime-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                    Name
-                  </label>
-                </div>
-                <div className="relative z-0 mb-6">
-                <input
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  type="text"
-                  id="floating_standard"
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-lime-500 peer"
-                  placeholder=" "
-                />
-                <label className="absolute text-sm text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-lime-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                  Username
-                </label>
-              </div>
-                    </>
-                  )}
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                className="border border-gray-900 text-gray-900 rounded-3xl focus:ring-blue-700 focus:border-blue-500 block w-full p-2"
+                placeholder="Name"
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="username"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Your username
+              </label>
 
-                  <div className="relative z-0 mb-8">
-                    <input
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      type="password"
-                      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-lime-500 peer"
-                      placeholder=" "
-                    />
-                    <label className="absolute text-sm text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-lime-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                      Password
-                    </label>
-                  </div>
-
-                  <div className="text-center lg:text-left">
-                    <button
-                      onClick={variant === "login" ? login : register}
-                      type="button"
-                      className="w-full text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-md text-sm px-5 py-2.5 mr-2 mb-2 shadow-[0_4px_9px_-4px_#84997f] uppercase"
-                    >
-                      {variant === "login" ? "Sign In" : "Sign Up"}
-                    </button>
-
-                    <p className="mb-0 mt-4 pt-1 text-sm font-medium text-gray-900">
-                      {variant === "login"
-                        ? "Don't have an account?"
-                        : "Already have an account?"}
-                      <a
-                        onClick={toggleVariant}
-                        className="ml-2 text-lime-500 transition duration-150 ease-in-out hover:text-lime-600 focus:text-lime-600 active:text-lime-700 cursor-pointer"
-                      >
-                        {variant === "login" ? "Sign Up" : "Sign In"}
-                      </a>
-                    </p>
-                  </div>
-                </form>
-              </div>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                type="text"
+                className="border border-gray-900 text-gray-900 rounded-3xl focus:ring-blue-700 focus:border-blue-500 block w-full p-2"
+                placeholder="Username"
+              />
             </div>
           </div>
-        </section>
-      </div>
+        )}
+        <div className="mb-6">
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Your Email
+          </label>
+
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            className="border border-gray-900 text-gray-900 rounded-3xl focus:ring-blue-700 focus:border-blue-500 block w-full p-2"
+            placeholder="Email"
+          />
+        </div>
+
+        <div className="mb-8">
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Your password
+          </label>
+
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            className="border border-gray-900 text-gray-900 rounded-3xl focus:ring-blue-700 focus:border-blue-500 block w-full p-2"
+            placeholder="Password"
+          />
+        </div>
+
+        <div className="text-center">
+          <button
+            onClick={variant === "login" ? login : register}
+            type="button"
+            className="w-full text-white bg-zinc-950 shadow-md hover:shadow-lg focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-3xl px-5 py-2.5 text-center"
+          >
+            {variant === "login" ? "Sign In" : "Sign Up"}
+          </button>
+
+          <p className="mb-0 mt-4 pt-1 text-sm font-medium text-gray-900">
+            {variant === "login"
+              ? "Don't have an account?"
+              : "Already have an account?"}
+            <a
+              onClick={toggleVariant}
+              className="ml-2 text-sky-700 transition duration-150 ease-in-out hover:text-sky-800 focus:text-sky-800 active:text-sky-600 cursor-pointer"
+            >
+              {variant === "login" ? "Sign Up" : "Sign In"}
+            </a>
+          </p>
+        </div>
+      </form>
+      <div className="h-screen w-1/5"></div>
     </div>
   );
 };
